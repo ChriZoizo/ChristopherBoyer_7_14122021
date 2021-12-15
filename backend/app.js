@@ -3,7 +3,8 @@ const cors = require('cors')
 const dotenv = require('dotenv')
 const mysql = require('mysql')
 const path = require('path')
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser")
+const userRoutes = require('../../P7_christopher_boyer/backend/routes/user')
 
 dotenv.config()
 
@@ -28,30 +29,49 @@ const connection = mysql.createConnection({
   connection.connect(err => {
     if (err) throw err
     console.log('MySQL server connection is OK !')
-  })
+})
 
+
+
+
+
+
+/*------------*/
 
 /* Fonction TESTING */
 
- app.use((req,res, next) => {
-  console.log(Date.now())
+/*  app.use((req,res, next) => {
+     console.log(Date.now())
   next()
 }) 
+ */
+
 
 /* Fonction test db user */
-app.use((req, res) => {
+
+/* app.use((req, res) => {
     connection.query('SELECT * from user LIMIT 1', (err, rows) => {
       if (err) throw err
     console.log('The data from user table are: \n', rows) 
       res.status(200).json({ message: 'The data from USER table are: \n', rows}) 
     })
-  })
+  }) */
 
 
-app.use(
-    '/images',
-    express.static(path.join(__dirname, 'images'))
-  ) 
+/*------------*/
+
+
+
+
+
+
    /* chemin static pour Multer (images) */
+   app.use(
+       '/images',
+       express.static(path.join(__dirname, 'images'))
+     ) 
+
+
+     app.use('/users', userRoutes)
 
 module.exports = app
